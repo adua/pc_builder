@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @build.name
+%p
+  %b Gross price:
+  = @build.gross_price
+%p
+  %b Net price:
+  = @build.net_price
+
+= link_to 'Edit', edit_build_path(@build)
+\|
+= link_to 'Back', builds_path

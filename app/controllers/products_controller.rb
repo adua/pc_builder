@@ -15,14 +15,18 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
-    pid = 'N82E16814161399'
+    pid = params[:id]
+    #pid = 'N82E16814161399'
     uri = URI("http://www.ows.newegg.com/Products.egg/#{pid}")
     res = Net::HTTP.get(uri)
     res = JSON.parse(res)
 
     price = BigDecimal.new(res["FinalPrice"].delete("$"))
-    rebate = BigDecimal.new(res["MailInRebateInfo"][0].split(" ").first.delete("$"))
-
+    if res["MailInRebateInfo"] == nil
+      rebate = 0.00
+    else
+      rebate = BigDecimal.new(res["MailInRebateInfo"][0].split(" ").first.delete("$"))
+    end
     @product = Product.new(:name => res["Title"], :pid => pid, :price => price, :rebate => rebate)
 
     respond_to do |format|

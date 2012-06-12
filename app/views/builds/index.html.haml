@@ -1,0 +1,23 @@
+%h1 Listing builds
+
+%table
+  %tr
+    %th Name
+    %th Gross price
+    %th Net price
+    %th
+    %th
+    %th
+
+  - @builds.each do |build|
+    %tr
+      %td= build.name
+      %td= build.gross_price
+      %td= build.net_price
+      %td= link_to 'Show', build
+      %td= link_to 'Edit', edit_build_path(build)
+      %td= link_to 'Destroy', build, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Build', new_build_path
